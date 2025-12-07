@@ -13,6 +13,9 @@ const feeds = [
 const instance = createInstance({
   state: {
     components: layout,
+    routes:{
+      '/test': () => <div>This is a test page!</div>,
+    },
     errorComponents: errors,
   },
   plugins: [...createStandardApi()],

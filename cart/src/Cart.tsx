@@ -109,7 +109,7 @@ export const CartComponent: React.FC = () => {
 
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 20, paddingRight: 50, marginTop: 20 }}>
         <h3>Total: {cartTotal} €</h3>
-        <Link to="/test">
+        <Link to="/sometest">
           <button disabled={cartIsEmpty} style={{ height: 30 }}>Checkout</button>
         </Link>
 
