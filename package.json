@@ -1,0 +1,44 @@
+{
+  "name": "piral-shell",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "piral debug",
+    "build": "piral build",
+    "postinstall": "piral declaration"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-router": "^5",
+    "@types/react-router-dom": "^5",
+    "piral-cli": "1.9.2",
+    "piral-cli-esbuild": "1.3.0",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "piral": "1.9.2",
+    "piral-base": "1.9.2",
+    "piral-core": "1.9.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router": "^5",
+    "react-router-dom": "^5"
+  },
+  "app": "./src/index.html",
+  "types": "dist/index.d.ts",
+  "importmap": {
+    "imports": {},
+    "inherit": [
+      "piral-base",
+      "piral-core",
+      "piral"
+    ]
+  }
+}
