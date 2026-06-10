@@ -8,9 +8,7 @@ interface Bike {
   price: number;
 }
 
-export interface CartItem {
-  id: number;
-  bike: Bike;
+export interface CartItem extends Bike {
   quantity: number;
 }
 
@@ -21,19 +19,19 @@ export interface Cart {
 }
 
 export class CartService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'http://localhost:8082';
 
   async getCart(): Promise<Cart> {
     const res = await fetch(`${this.apiUrl}/cart`);
     return res.json();
   }
 
-  async addToCart(id: number): Promise<void> {
-    await fetch(`${this.apiUrl}/cart/add/${id}`, { method: 'POST' });
+  async addToCart(bikeId: number): Promise<void> {
+    await fetch(`${this.apiUrl}/cart/add/${bikeId}`, { method: 'POST' });
   }
 
   async deleteCartItem(id: number): Promise<void> {
-    await fetch(`${this.apiUrl}/cart/deleteItem/${id}`, { method: 'POST' });
+    await fetch(`${this.apiUrl}/cart/delete/${id}`, { method: 'POST' });
   }
 
   async updateCartItemQuantity(id: number, type: 'increase' | 'decrease'): Promise<void> {

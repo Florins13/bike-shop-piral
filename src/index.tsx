@@ -8,14 +8,13 @@ import { layout, errors } from './layout';
 const feeds = [
   'http://localhost:1234/$pilet-api/',
   'http://localhost:1235/$pilet-api/',
+  'http://localhost:1236/$pilet-api/',
 ];
 
 const instance = createInstance({
   state: {
     components: layout,
-    routes:{
-      '/test': () => <div>This is a test page!</div>,
-    },
+    routes: {},
     errorComponents: errors,
   },
   plugins: [...createStandardApi()],

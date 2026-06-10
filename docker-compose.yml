@@ -1,0 +1,61 @@
+services:
+  # ──────────────────────────────────────────────
+  #  Piral Shell (App Shell)
+  # ──────────────────────────────────────────────
+  piral-shell:
+    build:
+      context: .
+      dockerfile: Dockerfile.shell
+    container_name: piral-shell
+    ports:
+      - "1233:80"
+    depends_on:
+      - bikes-pilet
+      - cart-pilet
+      - orders-pilet
+
+  # ──────────────────────────────────────────────
+  #  Bikes Pilet
+  # ──────────────────────────────────────────────
+  bikes-pilet:
+    build:
+      context: .
+      dockerfile: Dockerfile.pilet
+      args:
+        PILET_DIR: bikes
+    container_name: bikes-pilet
+    ports:
+      - "1234:1234"
+    environment:
+      - BIKE_API_URL=http://localhost:8081
+
+  # ──────────────────────────────────────────────
+  #  Cart Pilet
+  # ──────────────────────────────────────────────
+  cart-pilet:
+    build:
+      context: .
+      dockerfile: Dockerfile.pilet
+      args:
+        PILET_DIR: cart
+    container_name: cart-pilet
+    ports:
+      - "1235:1234"
+    environment:
+      - CART_API_URL=http://localhost:8082
+
+  # ──────────────────────────────────────────────
+  #  Orders Pilet
+  # ──────────────────────────────────────────────
+  orders-pilet:
+    build:
+      context: .
+      dockerfile: Dockerfile.pilet
+      args:
+        PILET_DIR: orders
+    container_name: orders-pilet
+    ports:
+      - "1236:1234"
+    environment:
+      - ORDER_API_URL=http://localhost:8083
+      - CART_API_URL=http://localhost:8082

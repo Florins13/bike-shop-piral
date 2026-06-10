@@ -1,8 +1,8 @@
 import * as React from 'react';
 import type { PiletApi } from 'piral-shell';
 
-const Cart = React.lazy(() => import('./Cart'));
+const Checkout = React.lazy(() => import('./Checkout'));
 
 export function setup(app: PiletApi) {
-  app.registerTile(() => <Cart />);
+  app.registerPage('/checkout', Checkout);
 }

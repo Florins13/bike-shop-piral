@@ -1,0 +1,30 @@
+FROM node:18
+
+WORKDIR /app
+
+# Copy the emulator tarball from the shell build
+COPY dist/emulator/ /emulator/
+
+# Copy pilet source
+ARG PILET_DIR
+COPY ${PILET_DIR}/package.json ./
+COPY ${PILET_DIR}/tsconfig.json ${PILET_DIR}/pilet.json ./
+COPY ${PILET_DIR}/src/ src/
+
+# Update the piral-shell dependency path to point to the emulator inside container
+RUN sed -i 's|file:../dist/emulator/piral-shell-1.0.0.tgz|file:/emulator/piral-shell-1.0.0.tgz|g' package.json || true
+RUN sed -i 's|file:../dist/emulator/piral-1.0.0.tgz|file:/emulator/piral-1.0.0.tgz|g' package.json || true
+
+# Replace esbuild with webpack5 bundler for Docker compatibility
+RUN sed -i 's|"piral-cli-esbuild": "[^"]*"|"piral-cli-webpack5": "^1.11.0"|g' package.json || true
+# Also add webpack5 if only esbuild was listed (catch all)
+RUN node -e "const p=require('./package.json'); if(p.devDependencies) { delete p.devDependencies['piral-cli-esbuild']; p.devDependencies['piral-cli-webpack5']='latest'; } require('fs').writeFileSync('./package.json', JSON.stringify(p,null,2));"
+
+# Install dependencies
+RUN npm install
+
+# Expose pilet debug port
+EXPOSE 1234
+
+# Run pilet debug with webpack5 bundler
+CMD ["npx", "pilet", "debug", "--port", "1234", "--bundler", "webpack5"]

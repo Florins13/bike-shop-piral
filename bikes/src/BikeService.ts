@@ -3,14 +3,14 @@ export interface Bike {
   id: number;
   model: string;
   imageSource: string;
-  stock: number;
+  availableStock: number;
   details: string;
   electric: boolean;
   price: number;
 }
 
 export class BikeService {
-  private apiUrl = 'http://localhost:8080/bikes';
+  private apiUrl = 'http://localhost:8081/bikes';
 
   constructor(apiUrl?: string) {
     if (apiUrl) {
@@ -18,7 +18,6 @@ export class BikeService {
     }
   }
 
-  // Fetch bikes from backend
   getBikes(): Promise<Bike[]> {
     return fetch(this.apiUrl)
       .then((res) => {

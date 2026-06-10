@@ -9,16 +9,6 @@ import logoutIcon from './assets/icons/logout.png';
 
 const MenuItem: React.FC<MenuItemProps> = ({ children }) => <li className="nav-item">{children}</li>;
 
-const defaultMenuItems = (
-  <>
-    <MenuItem type="general" meta={{}}>
-      <Link className="nav-link text-dark" to="/not-found">
-        Not Found
-      </Link>
-    </MenuItem>
-  </>
-);
-
 export const errors: Partial<ErrorComponentsState> = {
   not_found: () => (
     <div>
@@ -38,8 +28,8 @@ export const layout: Partial<ComponentsState> = {
     </div>
   ),
   DashboardContainer: ({ children }) => (
-    <div style={{display: 'flex', justifyContent: 'space-around'}}>
-        {children}
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      {children}
     </div>
   ),
   DashboardTile: ({ columns, rows, children }) => <div className={`tile cols-${columns} rows-${rows}`}>{children}</div>,
@@ -48,48 +38,36 @@ export const layout: Partial<ComponentsState> = {
       <Notifications />
       <Menu type="general" />
       <div>{children}</div>
-      <footer className="footer"><h3>UAB</h3></footer>
+      <footer className="footer">
+        <h3>&copy; 2026 UAB Rental Service</h3>
+      </footer>
     </div>
   ),
   MenuContainer: ({ children }) => {
-    const [collapsed, setCollapsed] = React.useState(true);
-    const [role, setRole] = React.useState<string | null>('BASIC');
     return (
       <header className="header_bar">
         <div>
-          <img style={{cursor: 'pointer', height: '70px', width: '70px'}}  src={bicycleIcon} alt="Logo"/>
+          <Link to="/">
+            <img style={{ cursor: 'pointer', height: '70px', width: '70px' }} src={bicycleIcon} alt="Bikes" />
+          </Link>
         </div>
 
         <div>
-          <h1>Bicycles</h1>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <h1>Bicycles</h1>
+          </Link>
         </div>
-        <nav style={{display: 'flex', alignItems: 'center'}} className='nav-style'>
-            {role === 'BASIC' ? (
-              <>
-                <div>
-                  <Link to="/orders"><img src={ordersIcon} alt="Orders" /></Link>
-                </div>
-                <div>
-                  <Link to="/cart"><img src={cartIcon} alt="Cart" /></Link>
-                </div>
-                <div>
-                  <Link to="/logout"><img src={logoutIcon} alt="Logout" /></Link>
-                </div>
-              </>
-            ) : role === 'MANAGER' ? (
-              <div>
-                <Link to="/logout"><img src={logoutIcon} alt="Logout" /></Link>
-              </div>
-            ) : (
-              <>
-                <div>
-                  <Link to="/login"><img src="login.png" alt="Login" /></Link>
-                </div>
-                <div>
-                  <Link to="/register"><img src="add-user.png" alt="Register" /></Link>
-                </div>
-              </>
-            )}
+
+        <nav style={{ display: 'flex', alignItems: 'center' }} className="nav-style">
+          <div>
+            <Link to="/cart"><img src={cartIcon} alt="Cart" /></Link>
+          </div>
+          <div>
+            <Link to="/checkout"><img src={ordersIcon} alt="Orders" /></Link>
+          </div>
+          <div>
+            <Link to="/"><img src={logoutIcon} alt="Logout" /></Link>
+          </div>
         </nav>
       </header>
     );
