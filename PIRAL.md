@@ -96,7 +96,7 @@ bike-shop-piral/
 │   └── pilet.json
 ├── docker-compose.yml          # Docker orchestration
 ├── Dockerfile.shell            # Shell container (nginx)
-├── Dockerfile.pilet            # Pilet containers (node + pilet debug)
+├── Dockerfile.pilet            # Pilet containers (multi-stage: pilet build → nginx)
 ├── nginx.conf                  # Nginx config for SPA
 ├── package.json                # Shell dependencies
 └── piral.json                  # Piral configuration
@@ -247,9 +247,14 @@ This starts:
 | Service | Container | Port | Description |
 |---------|-----------|------|-------------|
 | piral-shell | piral-shell | 1233 | Nginx serving the shell (production build) |
-| bikes-pilet | bikes-pilet | 1234 | Bikes pilet dev server + feed API |
-| cart-pilet | cart-pilet | 1235 | Cart pilet dev server + feed API |
-| orders-pilet | orders-pilet | 1236 | Orders pilet dev server + feed API |
+| bikes-pilet | bikes-pilet | 1234 | Nginx serving the bikes pilet (production build) + feed |
+| cart-pilet | cart-pilet | 1235 | Nginx serving the cart pilet (production build) + feed |
+| orders-pilet | orders-pilet | 1236 | Nginx serving the orders pilet (production build) + feed |
+
+All containers serve **minified, optimized production bundles**. Each pilet is compiled
+with `pilet build` in a Node build stage, then the static bundle is served by nginx
+together with a static pilet feed at `/$pilet-api/` (with CORS enabled so the shell on
+port 1233 can load it cross-origin).
 
 ### Step 4: Access the Application
 
